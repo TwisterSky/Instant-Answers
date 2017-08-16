@@ -13,7 +13,7 @@ Object.keys(config).forEach(function(elem) {
 var path = require('path');
 var appRoot = path.resolve(__dirname + '/../');
 var Logger = require('@qwant/front-logger');
-Logger.init(config_get('app.qwant-ia.logConfig'), appRoot);
+Logger(config_get('app.qwant-ia.logConfig'), appRoot);
 var winston = require('winston');
 var logger = winston.loggers.get('logger');
 var datahub = winston.loggers.get('datahub');

@@ -32,7 +32,7 @@ sandBox.stdout.on('data', (data) => {
 });
 
 sandBox.stderr.on('data', (data) => {
-    console.log(error('Error with the sandbox... Don\'t forget to `npm install` first!'));
+    console.log(error('Error with the sandbox... Don\'t forget to `npm install` first!', data));
     process.exit(1);
 });
 
