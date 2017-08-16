@@ -4,10 +4,11 @@ var request = require("request");
 var util = require("util");
 var join = Promise.join;
 var qwantCast = require('./drivers/qwantCast.js');
-
-var wetter = require('./drivers/wetter.js')();
+var path = require('path');
+var wetter = require('./drivers/wetter.js');
 var geoSolver = require('./geocoder/geo_solver');
-var logger = require('@qwant/front-logger')(config_get('app.qwant-ia.logConfig'));
+var winston = require('winston');
+var logger = winston.loggers.get('logger');
 var config = require('@qwant/config');
 config.import('weather'); // language config file (config/weather.yml)
 Object.keys(config).forEach(function(elem) {
@@ -43,7 +44,7 @@ module.exports = {
                 	var apiQwantCastRequestUrl = util.format(qwantCastUrlFormat, "search", city.latitude, city.longitude);
                 	var apiWeatherRequestUrl = util.format(apiUrlFormat, "weather", city.latitude, city.longitude, apiKey, lang);
                     var apiForecastRequestUrl = util.format(apiUrlFormat, "forecast", city.latitude, city.longitude, apiKey, lang);
-                    var qwantCastPromise = qwantCast.callQwantCastApi(apiQwantCastRequestUrl, proxyURL, logger);
+                    var qwantCastPromise = qwantCast.callQwantCastApi(apiQwantCastRequestUrl, proxyURL);
 
                     var apiWeatherPromise = new Promise(function(resolveWeather, rejectWeather) {
                     	var requestParams = {
@@ -106,6 +107,7 @@ module.exports = {
                             var netatmoProvider = null;
                             var weatherData = null;
 
+
                         	if (qwantCastData.data) {
                         		qwantCastData.data.main.temp += 273;
                         		weatherData = qwantCastData.data;
@@ -139,6 +141,5 @@ module.exports = {
     script: "weather",
     flag: "i",
     timeout: 3000,
-    cache: 1800,
-    canBeDisplayedVertically: true
+    cache: 1800
 };

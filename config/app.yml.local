@@ -5,17 +5,7 @@ qwant-ia:
   modules-base: "ia/template/"
   script-base: "ia/javascript/"
   images-base: "ia/img/"
-  excludedIA: ['weather']
+  excludedIA: ["weather"]
   logConfig:
-    cliLogSeverity:
-      ["critical",
-      "alert",
-      "error",
-      "warning",
-      "debug",
-      "info"]
-    elasticLogSeverity:
-      ["critical",
-      "alert",
-      "error",
-      "info"]
+    cli:
+      level: "debug"
